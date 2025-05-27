@@ -37,4 +37,14 @@ public class UserBO {
 
         return user == null ? false : true;
     }
+
+    // i: loginId, password
+    // o: UserEntity(단건) or null
+    public UserEntity getUserEntityByLoginIdPassword(String loginId, String password) {
+        // 비밀번호 해싱
+        String hashedPassword = HashUtils.md5(password);
+
+        // DB 조회
+        return userRepository.findByLoginIdAndPassword(loginId, hashedPassword).orElse(null);
+    }
 }
