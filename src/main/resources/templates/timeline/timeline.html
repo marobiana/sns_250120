@@ -8,7 +8,8 @@
   <section class="contents d-flex justify-content-center">
     <div class="contents-box">
       <!-- 글쓰기 영역(로그인 된 사람만 보임) -->
-      <div th:if="${session.userId != null}" class="write-box border rounded m-3">
+      <div class="write-box border rounded m-3">
+<!--      <div th:if="${session.userId != null}" class="write-box border rounded m-3">-->
         <textarea id="writeTextArea" placeholder="내용을 입력해주세요" class="w-100 border-0"></textarea>
 
         <div class="d-flex justify-content-between">
@@ -87,4 +88,35 @@
       </div> <!-- 타임라인 박스 끝 -->
     </div> <!-- 컨텐츠 박스 끝 -->
   </section>
+
+  <script>
+    $(function() {
+      // 이미지 a 태그 클릭 => 숨겨져 있는 file을 동작 시킴
+      $("#fileUploadBtn").on("click", function(e) {
+        e.preventDefault(); // 위로 올라가는 현상 방지
+        $("#file").click();
+      });
+
+      // 파일이 선택될 때  
+      $("#file").on("change", function(e) {
+        //alert("파일선택");
+        let fileName = e.target.files[0].name;
+        console.log(fileName);
+
+        let ext = fileName.split(".").pop().toLowerCase();
+        console.log(ext);
+
+        // 확장자 검사
+        if (ext != "gif" && ext != "jpg" && ext != "png") {
+          alert("이미지만 업로드 할 수 있습니다.");
+          $("#file").val(""); // 보이진 않지만 파일태그에 올라온 것 제거
+          $("#fileName").text(""); // 파일명 초기화
+          return;
+        }
+
+        // 파일명 옆에 노출
+        $("#fileName").text(fileName);
+      });
+    });
+  </script>
 </th:block>
