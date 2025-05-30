@@ -68,12 +68,12 @@
           <!-- 댓글 목록 -->
           <div class="card-comment-list m-2">
             <!-- 댓글들 -->
-            <div class="card-comment m-1">
-              <span class="font-weight-bold">댓글쓰니</span>
-              <span>댓글 내용임</span>
+            <div th:each="comment: ${commentList}" th:if="${comment.postId == post.id}" class="card-comment m-1">
+              <span class="font-weight-bold" th:text="${comment.userId}">댓글쓰니</span>
+              <span th:text="${comment.content}">댓글 내용임</span>
 
               <!-- 댓글 삭제(자신의 댓글만 가능) -->
-              <a href="#" class="comment-del-btn">
+              <a th:if="${comment.userId == session.userId}" href="#" class="comment-del-btn">
                 <img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10" height="10">
               </a>
             </div>
@@ -128,7 +128,7 @@
 
           // 이미지 필수
           let file = $('#file').val();
-          if (file == '') {
+          if (!file) {
               alert('파일을 업로드 해주세요');
               return;
           }
@@ -170,6 +170,31 @@
                   alert("글 저장에 실패했습니다. 관리자에게 문의해주세요.");
               }
           });  // --- ajax 끝
+      });
+
+      // 댓글 쓰기
+      $(".comment-btn").on("click", function() {
+        // TODO
+
+        $.ajax({
+            type:"post"
+            , url:"/comment/create"
+            , data:{"postId":postId, "content":commentContent}
+            , success:function(data) {
+                if (data.code == 200) {
+                    location.reload();
+                } else if (data.code == 403) {
+                    // 비로그인
+                    alert(data.error_message);
+                    location.href = "/user/sign-in-view"; // 로그인 화면으로 이동
+                } else {
+                    alert(data.error_message);
+                }
+            }
+            , error:function(e) {
+                alert("댓글 쓰기에 실패했습니다.");
+            }
+        });
       });
     });
   </script>
