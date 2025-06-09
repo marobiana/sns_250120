@@ -1,11 +1,13 @@
 package com.sns.comment.service;
 
 import com.sns.comment.domain.Comment;
+import com.sns.comment.domain.CommentDTO;
 import com.sns.comment.mapper.CommentMapper;
 import com.sns.user.service.UserBO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -20,4 +22,26 @@ public class CommentBO {
     public List<Comment> getCommentList() {
         return commentMapper.selectCommentList();
     }
+
+    // i: 글번호(postId)
+    // o: List<CommentDTO>
+    public List<CommentDTO> generateCommentListByPostId(int postId) {
+        List<CommentDTO> commentList = new ArrayList<>();
+
+        // 글에 해당하는 댓글 리스트 가져옴
+
+        // 반복문:  Comment -> CommentDTO => commentList에 넣기
+        //                 댓글쓴이도 집어 넣기
+
+        return commentList;
+    }
 }
+
+
+
+
+
+
+
+
+

@@ -21,8 +21,8 @@ public class CommentRestController {
      * @param session
      * @return
      */
-    //@PostMapping("/create")
-    @GetMapping("/create")   // TODO 임시로 GET
+    // http://localhost:8080/comment/create?postId=2&content=댓글달기!~!!
+    @PostMapping("/create")
     public Map<String, Object> create(
             @RequestParam("postId") int postId,
             @RequestParam("content") String content,

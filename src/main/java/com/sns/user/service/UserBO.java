@@ -47,4 +47,10 @@ public class UserBO {
         // DB 조회
         return userRepository.findByLoginIdAndPassword(loginId, hashedPassword).orElse(null);
     }
+
+    // i: userId (pk)
+    // o: UserEntity or null
+    public UserEntity getUserEntityById(int userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
 }

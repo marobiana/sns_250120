@@ -5,31 +5,31 @@
     <insert id="insertComment" parameterType="map">
         INSERT INTO `comment`
         (
-        `postId`
-        ,`userId`
-        ,`content`
-        ,`createdAt`
-        ,`updatedAt`
+            `postId`
+            ,`userId`
+            ,`content`
+            ,`createdAt`
+            ,`updatedAt`
         )
         VALUES
         (
-        #{postId}
-        , #{userId}
-        , #{content}
-        , NOW()
-        , NOW()
+            #{postId}
+            , #{userId}
+            , #{content}
+            , NOW()
+            , NOW()
         )
     </insert>
 
     <select id="selectCommentList" resultType="com.sns.comment.domain.Comment">
         SELECT
-        `id`
-        ,`postId`
-        ,`userId`
-        ,`content`
-        ,`createdAt`
-        ,`updatedAt`
+            `id`
+            ,`postId`
+            ,`userId`
+            ,`content`
+            ,`createdAt`
+            ,`updatedAt`
         FROM
-        `comment`
+            `comment`
     </select>
 </mapper>
