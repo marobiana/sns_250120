@@ -73,7 +73,7 @@
               <span th:text="${comment.comment.content}">댓글 내용임</span>
 
               <!-- 댓글 삭제(자신의 댓글만 가능) -->
-              <a th:if="${comment.user.id == session.userId}" href="#" class="comment-del-btn">
+              <a th:if="${comment.user.id == session.userId}" href="#" class="comment-del-btn" th:data-comment-id="${comment.comment.id}">
                 <img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10" height="10">
               </a>
             </div>
