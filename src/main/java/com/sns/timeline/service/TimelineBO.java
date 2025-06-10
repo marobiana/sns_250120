@@ -42,6 +42,10 @@ public class TimelineBO {
             List<CommentDTO> commentList = commentBO.generateCommentListByPostId(postEntity.getId());
             card.setCommentList(commentList);
 
+            // TODO: 좋아요 개수 채우기
+
+            // TODO: 좋아요 눌렀는지 여부
+
             // !!!!!!!!! 마지막 리스트에 꼭 담기! !!!!!
             cardList.add(card);
         }

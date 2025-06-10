@@ -23,4 +23,8 @@ public class CardDTO {
     private List<CommentDTO> commentList;
 
     // 좋아요 수 N개
+    private int likeCount;
+
+    // 내가 좋아요를 눌렀는지 여부
+    private boolean filledLike; // 눌리면 true
 }
