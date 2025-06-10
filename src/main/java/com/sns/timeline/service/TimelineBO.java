@@ -1,6 +1,7 @@
 package com.sns.timeline.service;
 
 import com.sns.comment.domain.CommentDTO;
+import com.sns.comment.service.CommentBO;
 import com.sns.post.entity.PostEntity;
 import com.sns.post.service.PostBO;
 import com.sns.timeline.domain.CardDTO;
@@ -15,9 +16,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class TimelineBO {
-
     private final PostBO postBO;
     private final UserBO userBO;
+    private final CommentBO commentBO;
 
     // i: X
     // o: List<CardDTO>
@@ -38,7 +39,7 @@ public class TimelineBO {
             card.setUser(user);
             
             // 댓글 N개
-            List<CommentDTO> commentList = commentBO.generateCommentListByPostId(글번호);
+            List<CommentDTO> commentList = commentBO.generateCommentListByPostId(postEntity.getId());
             card.setCommentList(commentList);
 
             // !!!!!!!!! 마지막 리스트에 꼭 담기! !!!!!

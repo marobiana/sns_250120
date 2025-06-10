@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public class CommentBO {
     private final CommentMapper commentMapper;
+    private final UserBO userBO;
 
     public int addComment(int postId, int userId, String content) {
         return commentMapper.insertComment(postId, userId, content);
@@ -26,14 +27,29 @@ public class CommentBO {
     // i: 글번호(postId)
     // o: List<CommentDTO>
     public List<CommentDTO> generateCommentListByPostId(int postId) {
-        List<CommentDTO> commentList = new ArrayList<>();
+        List<CommentDTO> commentDTOList = new ArrayList<>();
 
         // 글에 해당하는 댓글 리스트 가져옴
+        List<Comment> commentList = commentMapper.selectCommentListByPostId(postId);
 
         // 반복문:  Comment -> CommentDTO => commentList에 넣기
         //                 댓글쓴이도 집어 넣기
+        for (Comment comment : commentList) {
+            CommentDTO commentDTO = new CommentDTO();
+            // 댓글 1개
+            commentDTO.setComment(comment);
+            // 댓글쓴이 1개
+            commentDTO.setUser(userBO.getUserEntityById(comment.getUserId()));
 
-        return commentList;
+            // 반드시 리스트에 넣기!!!
+            commentDTOList.add(commentDTO);
+        }
+
+        return commentDTOList;
+    }
+
+    public void deleteCommentById(int commentId) {
+        commentMapper.deleteCommentById(commentId);
     }
 }
 
