@@ -2,6 +2,7 @@ package com.sns.timeline.service;
 
 import com.sns.comment.domain.CommentDTO;
 import com.sns.comment.service.CommentBO;
+import com.sns.like.service.LikeBO;
 import com.sns.post.entity.PostEntity;
 import com.sns.post.service.PostBO;
 import com.sns.timeline.domain.CardDTO;
@@ -19,6 +20,7 @@ public class TimelineBO {
     private final PostBO postBO;
     private final UserBO userBO;
     private final CommentBO commentBO;
+    private final LikeBO likeBO;
 
     // i: X
     // o: List<CardDTO>
@@ -42,7 +44,9 @@ public class TimelineBO {
             List<CommentDTO> commentList = commentBO.generateCommentListByPostId(postEntity.getId());
             card.setCommentList(commentList);
 
-            // TODO: 좋아요 개수 채우기
+            // 좋아요 개수 채우기
+            int likeCount = likeBO.getLikeCountByPostId(postEntity.getId());
+            card.setLikeCount(likeCount);
 
             // TODO: 좋아요 눌렀는지 여부
 

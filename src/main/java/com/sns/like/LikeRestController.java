@@ -1,6 +1,8 @@
 package com.sns.like;
 
+import com.sns.like.service.LikeBO;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,8 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @RestController
 public class LikeRestController {
+    private final LikeBO likeBO;
 
     // GET /like?postId=2   @RequestParam("postId")
     // GET /like/2          @PathVariable(name = "postId")
