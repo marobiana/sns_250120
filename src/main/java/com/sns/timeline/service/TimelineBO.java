@@ -22,9 +22,9 @@ public class TimelineBO {
     private final CommentBO commentBO;
     private final LikeBO likeBO;
 
-    // i: X
+    // i: userId(비로그인null 또는 로그인int)
     // o: List<CardDTO>
-    public List<CardDTO> generateCardList() {
+    public List<CardDTO> generateCardList(Integer userId) {
         List<CardDTO> cardList = new ArrayList<>();
 
         // 글 목록을 가져온다. List<PostEntity>
@@ -48,7 +48,9 @@ public class TimelineBO {
             int likeCount = likeBO.getLikeCountByPostId(postEntity.getId());
             card.setLikeCount(likeCount);
 
-            // TODO: 좋아요 눌렀는지 여부
+            // 좋아요 눌렀는지 여부
+            boolean filledLike = likeBO.isFilledLike(userId, postEntity.getId());
+            card.setFilledLike(filledLike);
 
             // !!!!!!!!! 마지막 리스트에 꼭 담기! !!!!!
             cardList.add(card);

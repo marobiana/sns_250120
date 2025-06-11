@@ -6,6 +6,7 @@ import com.sns.post.entity.PostEntity;
 import com.sns.post.service.PostBO;
 import com.sns.timeline.domain.CardDTO;
 import com.sns.timeline.service.TimelineBO;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +20,8 @@ public class TimelineController {
     private final TimelineBO timelineBO;
 
     @GetMapping("/timeline")
-    public String timeline(Model model) {
-        List<CardDTO> cardDTOList = timelineBO.generateCardList();
+    public String timeline(Model model, HttpSession session) {
+        List<CardDTO> cardDTOList = timelineBO.generateCardList((Integer)session.getAttribute("userId"));
         model.addAttribute("cardList", cardDTOList);
         return "timeline/timeline";
     }
