@@ -36,7 +36,7 @@
             <span class="font-weight-bold" th:text="${card.user.name}">글쓴이</span>
 
             <!-- 더보기 ...(로그인 된 사람과 글쓴이 정보 일치할 때 보이게) -->
-            <a href="#" class="more-btn">
+            <a href="#" th:if="${session.userId == card.user.id}" th:data-post-id="${card.post.id}" class="more-btn" data-toggle="modal" data-target="#modal">
               <img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
             </a>
           </div>
@@ -91,6 +91,20 @@
       </div> <!-- 타임라인 박스 끝 -->
     </div> <!-- 컨텐츠 박스 끝 -->
   </section>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modal">
+    <div class="modal-dialog modal-sm modal-dialog-centered"> <!-- modal-sm:작은 모달, modal-dialog-centered:수직 가운데 -->
+      <div class="modal-content text-center">
+        <div class="py-3 border-bottom">
+          <a href="#" id="postDeleteBtn">삭제하기</a>
+        </div>
+        <div class="py-3">
+          <a href="#" data-dismiss="modal">취소</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
     $(function() {
@@ -254,6 +268,47 @@
           }
         });
       });
+
+      $("#deletePostBtn").on("click", function() {
+        let postId = $(this).data("post-id");
+        //alert(postId);
+
+        $.ajax({
+          type:"delete"
+          , url:"/post/delete"
+          , data:{"postId":postId}
+          , success:function(data) {
+            if (data.code == 200) {
+              alert("메모가 삭제되었습니다.");
+              location.href = "/post/post-list-view";
+            } else {
+              alert(data.error_message);
+            }
+          }
+          , error:function(e) {
+            alert("글을 삭제하는데 실패했습니다");
+          }
+        });
+      });
+
+      // ... 더보기 클릭시 1.모달창 뜸  2. postId를 얻은 후 모달에 넣는다
+      $(".more-btn").on("click", function() {
+        let postId = $(this).data("post-id"); // getting
+        //alert(postId);
+        // 모달을 재활용하기 위해 
+        // modal에 data-post-id를 심어둔다.
+        $("#modal").data("post-id", postId); // setting
+      });
+
+      // 모달 안에 있는 삭제하기 클릭 -> 모달 안에 삭제할 글번호 있음
+      $("#modal #postDeleteBtn").on("click", function(e) {
+        e.preventDefault(); // a태그의 위로 올라가는 현상 방지
+
+        // postId 꺼내옴 => 모달 태그에
+        let postId = $("#modal").data("post-id");
+        alert(postId);
+      });
+
     });
   </script>
 </th:block>

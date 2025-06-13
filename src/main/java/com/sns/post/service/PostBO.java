@@ -5,6 +5,7 @@ import com.sns.post.entity.PostEntity;
 import com.sns.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -34,5 +35,16 @@ public class PostBO {
                         .content(content)
                         .imagePath(imagePath)
                         .build());
+    }
+
+    // 글삭제
+    // i:postId
+    // o:
+    @Transactional // DB 수행 시 하나라도 실패하면 자동 복구 (격리 수준)
+    public void deletePostByPostId() {
+        // 글삭제
+        // 이미지 삭제
+        // 댓글 삭제
+        // 좋아요 삭제
     }
 }
