@@ -41,4 +41,8 @@ public class LikeBO {
         //return likeMapper.selectLikeCountByUserIdPostId(userId, postId) > 0;
         return likeMapper.selectLikeCountByPostIdOrUserId(postId, userId) > 0;
     }
+
+    public void deleteLikesByPostId(int postId) {
+        likeMapper.deleteLikesByPostId(postId);
+    }
 }

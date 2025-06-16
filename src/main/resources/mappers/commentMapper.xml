@@ -50,8 +50,16 @@
     <delete id="deleteCommentById" parameterType="int">
         DELETE
         FROM
-        comment
+            `comment`
         WHERE
-        `id` = #{commentId}
+            `id` = #{commentId}
+    </delete>
+
+    <delete id="deleteCommentListByPostId" parameterType="int">
+        DELETE
+        FROM
+            `comment`
+        WHERE
+            `postId` = #{postId}
     </delete>
 </mapper>
